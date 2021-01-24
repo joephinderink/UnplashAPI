@@ -8,9 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var searchObjectController = SearchObjectController.shared
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        List {
+            ForEach(searchObjectController.results, id: \.id, content: {
+                result in
+                Text(result.description ?? "Empty")
+            })
+        }
+        .onAppear() {
+            searchObjectController.search()
+        }
     }
 }
 
